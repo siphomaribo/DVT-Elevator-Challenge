@@ -45,7 +45,7 @@ namespace DVT.Elevator.Challenge.Tests
         {
             Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
-                await _elevatorService.RequestElevatorAsync(6, 20);
+                await _elevatorService.RequestElevatorAsync(6, 110);
             });
         }
 
