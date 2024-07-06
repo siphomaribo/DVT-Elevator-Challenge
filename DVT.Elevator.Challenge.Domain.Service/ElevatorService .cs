@@ -13,7 +13,7 @@ namespace DVT.Elevator.Challenge.Domain.Service
         private readonly List<ElevatorModel> _elevators;
         private readonly int _totalFloors;
         private readonly Queue<(int FloorNumber, int NumberOfPeople)> _requestsQueue = new();
-        private const int WeightLimit = 10;
+        private const int WeightLimit = 100;
 
         public ElevatorService(int totalFloors, List<ElevatorModel> elevators)
         {
