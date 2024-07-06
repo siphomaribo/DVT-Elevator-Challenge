@@ -1,6 +1,10 @@
+using DVT.Elevator.Challenge.Domain.Abstraction.Interface;
 using DVT.Elevator.Challenge.Domain.Model;
 using DVT.Elevator.Challenge.Domain.Service;
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DVT.Elevator.Challenge.Tests
 {
@@ -25,14 +29,9 @@ namespace DVT.Elevator.Challenge.Tests
         }
 
         [Test]
-        public void RequestElevator_ShouldMoveNearestElevatorToRequestedFloor()
+        public async Task RequestElevator_ShouldMoveNearestElevatorToRequestedFloorAsync()
         {
-            _elevators[0].CurrentFloor = 1;
-            _elevators[1].CurrentFloor = 5;
-            _elevators[2].CurrentFloor = 10;
-            _elevators[3].CurrentFloor = 15;
-
-            _elevatorService.RequestElevator(6, 3);
+            await _elevatorService.RequestElevatorAsync(6, 3);
 
             var nearestElevator = _elevators.Find(e => e.CurrentFloor == 6);
 
@@ -43,34 +42,43 @@ namespace DVT.Elevator.Challenge.Tests
         }
 
         [Test]
-        public void RequestElevator_ShouldNotExceedCapacity()
+        public async Task RequestElevator_ShouldNotExceedCapacity()
         {
-            _elevatorService.RequestElevator(6, 20);
-            Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(1)); 
+            await _elevatorService.RequestElevatorAsync(6, 20);
+            Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(1));
             Assert.That(_elevators[0].Occupied, Is.EqualTo(0));
         }
 
         [Test]
-        public void RequestElevator_NoAvailableElevator_ShouldNotMoveAnyElevator()
+        public async Task RequestElevator_NoAvailableElevator_ShouldNotMoveAnyElevator()
         {
-            _elevators[0].Occupied = 10; 
-            _elevators[1].Occupied = 8; 
-            _elevators[2].Occupied = 12; 
-            _elevators[3].Occupied = 15; 
+            _elevators[0].Occupied = 10;
+            _elevators[1].Occupied = 8;
+            _elevators[2].Occupied = 12;
+            _elevators[3].Occupied = 15;
 
-            _elevatorService.RequestElevator(6, 3);
-            Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(1)); 
+            await _elevatorService.RequestElevatorAsync(6, 3);
+            Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(1));
             Assert.That(_elevators[1].CurrentFloor, Is.EqualTo(5));
             Assert.That(_elevators[2].CurrentFloor, Is.EqualTo(10));
             Assert.That(_elevators[3].CurrentFloor, Is.EqualTo(15));
         }
 
         [Test]
-        public void MoveElevator_ShouldMoveElevatorToTargetFloor()
+        public async Task MoveElevator_ShouldMoveElevatorToTargetFloor()
         {
-            _elevatorService.MoveElevator(1, 7);
+            await _elevatorService.MoveElevatorAsync(1, 7);
             Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(7));
             Assert.That(_elevators[0].Direction, Is.EqualTo(ElevatorDirectionEnum.Idle));
+        }
+
+        [Test]
+        public async Task MoveElevator_InvalidFloor_ShouldThrowException()
+        {
+            Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+            {
+                await _elevatorService.MoveElevatorAsync(1, 25);
+            });
         }
 
         [Test]
@@ -96,7 +104,6 @@ namespace DVT.Elevator.Challenge.Tests
             StringBuilder statuses = _elevatorService.DisplayElevatorStatuses();
 
             StringBuilder expectedStatuses = new StringBuilder();
-
             expectedStatuses.AppendLine("Elevator 1: Floor 3, Direction Idle, Occupied 4/10, Type Passenger");
             expectedStatuses.AppendLine("Elevator 2: Floor 6, Direction Up, Occupied 2/8, Type Passenger");
             expectedStatuses.AppendLine("Elevator 3: Floor 10, Direction Down, Occupied 0/12, Type HighSpeed");
