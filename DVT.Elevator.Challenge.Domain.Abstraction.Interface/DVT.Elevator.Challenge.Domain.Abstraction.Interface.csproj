@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DVT.Elevator.Challenge.Domain.Model\DVT.Elevator.Challenge.Domain.Model.csproj" />
+  </ItemGroup>
+
 </Project>
