@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVT.Elevator.Challenge", "DVT.Elevator.Challenge\DVT.Elevator.Challenge.csproj", "{F8E8CC7A-DDF4-4E31-BC4B-72E382D26E37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVT.Elevator.Challenge.Domain", "DVT.Elevator.Challenge.Domain\DVT.Elevator.Challenge.Domain.csproj", "{D716D4FE-B1F8-4A2C-8507-92190D20E92A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVT.Elevator.Challenge.Domain.Model", "DVT.Elevator.Challenge.Domain.Model\DVT.Elevator.Challenge.Domain.Model.csproj", "{D716D4FE-B1F8-4A2C-8507-92190D20E92A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DVT.Elevator.Challenge.Domain.Service", "DVT.Elevator.Challenge.Domain.Service\DVT.Elevator.Challenge.Domain.Service.csproj", "{582D08F2-CC95-4541-898E-B64E8B8BBF04}"
 EndProject
