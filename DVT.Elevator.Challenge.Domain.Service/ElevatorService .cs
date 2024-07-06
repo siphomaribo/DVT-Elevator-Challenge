@@ -13,6 +13,7 @@ namespace DVT.Elevator.Challenge.Domain.Service
         private readonly List<ElevatorModel> _elevators;
         private readonly int _totalFloors;
         private readonly Queue<(int FloorNumber, int NumberOfPeople)> _requestsQueue = new();
+        private const int WeightLimit = 100;
 
         public ElevatorService(int totalFloors, List<ElevatorModel> elevators)
         {
@@ -57,6 +58,11 @@ namespace DVT.Elevator.Challenge.Domain.Service
                 throw new ArgumentOutOfRangeException(nameof(floorNumber), "Requested floor number is out of range.");
             }
 
+            if (numberOfPeople > WeightLimit)
+            {
+                throw new InvalidOperationException($"Number of people exceeds the weight limit of {WeightLimit}.");
+            }
+
             _requestsQueue.Enqueue((floorNumber, numberOfPeople));
             await ProcessRequestsQueueAsync();
         }
@@ -83,7 +89,7 @@ namespace DVT.Elevator.Challenge.Domain.Service
         private ElevatorModel FindNearestAvailableElevator(int floorNumber, int numberOfPeople)
         {
             return _elevators
-                .Where(elevator => elevator.Occupied + numberOfPeople <= elevator.Capacity)
+                .Where(elevator => elevator.Occupied + numberOfPeople <= elevator.Capacity && numberOfPeople <= WeightLimit)
                 .OrderBy(elevator => Math.Abs(elevator.CurrentFloor - floorNumber))
                 .FirstOrDefault();
         }

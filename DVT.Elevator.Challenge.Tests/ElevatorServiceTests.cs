@@ -1,4 +1,3 @@
-using DVT.Elevator.Challenge.Domain.Abstraction.Interface;
 using DVT.Elevator.Challenge.Domain.Model;
 using DVT.Elevator.Challenge.Domain.Service;
 using NUnit.Framework;
@@ -42,11 +41,12 @@ namespace DVT.Elevator.Challenge.Tests
         }
 
         [Test]
-        public async Task RequestElevator_ShouldNotExceedCapacity()
+        public async Task RequestElevator_ShouldNotExceedWeightLimit()
         {
-            await _elevatorService.RequestElevatorAsync(6, 20);
-            Assert.That(_elevators[0].CurrentFloor, Is.EqualTo(1));
-            Assert.That(_elevators[0].Occupied, Is.EqualTo(0));
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await _elevatorService.RequestElevatorAsync(6, 110);
+            });
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace DVT.Elevator.Challenge.Tests
         }
 
         [Test]
-        public async Task MoveElevator_InvalidFloor_ShouldThrowException()
+        public void MoveElevator_InvalidFloor_ShouldThrowException()
         {
             Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
             {
