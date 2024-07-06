@@ -1,4 +1,5 @@
 ﻿using DVT.Elevator.Challenge.Domain.Model;
+using System.Text;
 
 namespace DVT.Elevator.Challenge.Domain.Abstraction.Interface
 {
@@ -7,6 +8,6 @@ namespace DVT.Elevator.Challenge.Domain.Abstraction.Interface
         void RequestElevator(int floorNumber, int numberOfPeople);
         void MoveElevator(int elevatorId, int targetFloor);
         ElevatorModel GetElevatorStatus(int elevatorId);
-        void DisplayElevatorStatuses();
+        StringBuilder DisplayElevatorStatuses();
     }
 }
