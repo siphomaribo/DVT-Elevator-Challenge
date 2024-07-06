@@ -9,5 +9,10 @@
         public ElevatorDirectionEnum Direction { get; set; }
         public ElevatorTypeEnum Type { get; set; }
 
+        public override string ToString()
+        {
+            return $"Elevator {Id}: Floor {CurrentFloor}, Direction {Direction}, Occupied {Occupied}/{Capacity}, Type {Type}";
+        }
+
     }
 }

@@ -18,6 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DVT.Elevator.Challenge.Domain.Abstraction.Interface\DVT.Elevator.Challenge.Domain.Abstraction.Interface.csproj" />
+    <ProjectReference Include="..\DVT.Elevator.Challenge.Domain.Service\DVT.Elevator.Challenge.Domain.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
